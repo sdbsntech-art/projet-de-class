@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FESTIVAL-FOOD - Restaurant Gastronomique</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #F5DEB3;
+            --accent-color: #A52A2A;
+            --light-color: #FFF8DC;
+            --dark-color: #3C2A1E;
+        }
+        
+        body {
+            font-family: 'Playfair Display', serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .hero-section {
+            height: 98vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmVzdGF1cmFudCUyMGludGVyaW9yfGVufDB8fDB8fHww&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 100vh;
+            }
+        }
+        
+        .navbar {
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        
+        .navbar.scrolled {
+            background: var(--dark-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline-light {
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-light:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .price-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .special-offer {
+            background: linear-gradient(45deg, var(--secondary-color), var(--light-color));
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .testimonial-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        
+        .gallery-item {
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(139, 69, 19, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .contact-info {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 15px;
+            height: 100%;
+        }
+        
+        .contact-icon {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+        
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-links h5 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .modal-content {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .modal-menu-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /*  les ancres */
+        section {
+            scroll-margin-top: 80px;
+        }
+        .nvp {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#accueil">FESTIVAL-FOOD</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#accueil">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#menuModal">Notre Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#offres">Offres Spéciales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reservation">Réservation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#galerie">Galerie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#temoignages">Témoignages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- partie Header  -->
+    <header id="accueil" class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="display-3 font-weight-bold mb-4">FESTIVAL-FOOD</h1>
+                    <p class="lead mb-5">Une expérience culinaire exceptionnelle au cœur de pikine</p>
+                    <a href="#reservation" class="btn btn-primary mr-3">Réserver une table</a>
+                    <a href="#contact" class="btn btn-outline-light">Nous contacter</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Notre Menu  -->
+    <div class="modal fade" id="menuModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Notre Menu Gastronomique</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-pills mb-4 justify-content-center" id="menuTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="entrees-tab" data-toggle="pill" href="#entrees">Entrées</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="plats-tab" data-toggle="pill" href="#plats">Plats Principaux</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="desserts-tab" data-toggle="pill" href="#desserts">Desserts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="boissons-tab" data-toggle="pill" href="#boissons">Boissons</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="menuTabsContent">
+                        <div class="tab-pane fade show active" id="entrees">
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="modal-menu-img w-100 h-100" alt="Entrée 1">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Tartare de Saumon</h5>
+                                            <p class="card-text">Saumon frais mariné au citron et à l'aneth, servi avec des toasts</p>
+                                            <p class="font-weight-bold text-primary">18€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="modal-menu-img w-100 h-100" alt="Entrée 2">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Foie Gras Maison</h5>
+                                            <p class="card-text">Foie gras de canard fait maison, confiture de figues et pain brioché</p>
+                                            <p class="font-weight-bold text-primary">22€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80" class="modal-menu-img w-100 h-100" alt="Salade sénégalaise">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Salade sénégalaise</h5>
+                                            <p class="card-text">Salade fraîche avec légumes locaux, œufs, thon et sauce vinaigrette maison</p>
+                                            <p class="font-weight-bold text-primary">10€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/thiebou dieune.jpeg" class="modal-menu-img w-100 h-100" alt="Pastels">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Riz au poisson.</h5>
+                                            <p class="card-text">plat international senegalaise</p>
+                                            <p class="font-weight-bold text-primary">8€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Entrée supplémentaire sénégalaise : Nems au poulet -->
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/fonde.jpeg" class="modal-menu-img w-100 h-100" alt="Nems au poulet">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Le Fondee</h5>
+                                            <p class="card-text">L'une des plats favorites des senegalaise.</p>
+                                            <p class="font-weight-bold text-primary">9€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Entrée sénégalaise : Accra de Niébé -->
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/accra.jpeg" class="modal-menu-img w-100 h-100" alt="Accra de Niébé">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Accra de Niébé</h5>
+                                            <p class="card-text">Beignets traditionnels de haricots niébé, spécialité sénégalaise</p>
+                                            <p class="font-weight-bold text-primary">7€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="modal-menu-img w-100 h-100" alt="Plat 1">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Filet de Boeuf Rossini</h5>
+                                            <p class="card-text">Filet de boeuf wagyu, foie gras poêlé, truffe noire et sauce au porto</p>
+                                            <p class="font-weight-bold text-primary">42€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="modal-menu-img w-100 h-100" alt="Plat 2">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Bar en Croûte de Sel</h5>
+                                            <p class="card-text">Bar de ligne cuit en croûte de sel, légumes de saison et beurre blanc</p>
+                                            <p class="font-weight-bold text-primary">36€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/yassa poulet.jpeg" class="modal-menu-img w-100 h-100" alt="Yassa Poulet">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Yassa Poulet</h5>
+                                            <p class="card-text">Poulet mariné au citron et oignons, servi avec riz blanc</p>
+                                            <p class="font-weight-bold text-primary">16€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/mafe.jpeg" class="modal-menu-img w-100 h-100" alt="Mafé">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Mafé</h5>
+                                            <p class="card-text">Ragoût de bœuf à la sauce arachide, accompagné de riz parfumé</p>
+                                            <p class="font-weight-bold text-primary">17€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card mb-3" id="desserts">
+                            
+                            <p class="nvp">Desserts</p>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="modal-menu-img w-100 h-100" alt="Dessert 1">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Soufflé au Chocolat</h5>
+                                            <p class="card-text">Soufflé grand marnier au chocolat noir, glace vanille de Madagascar</p>
+                                            <p class="font-weight-bold text-primary">14€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/fruit.jpeg" class="modal-menu-img w-100 h-100" alt="Dessert 2">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">fruits</h5>
+                                            <p class="card-text">Savourez avec douceur nos meilleur fruits.</p>
+                                            <p class="font-weight-bold text-primary">12€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">h
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/thiakry.jpeg" class="modal-menu-img w-100 h-100" alt="Thiakry">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Thiakry</h5>
+                                            <p class="card-text">Dessert sénégalais à base de mil, yaourt sucré et raisins secs</p>
+                                            <p class="font-weight-bold text-primary">7€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="assets/salade de fruit.jpeg" class="modal-menu-img w-100 h-100" alt="Fondé">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">salade de fruit</h5>
+                                            <p class="card-text"> un dessert magnifique et riche en vitamine.</p>
+                                            <p class="font-weight-bold text-primary">6€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <p class="nvp">Boissons</p>
+                        <div class="card mb-3" id="boissons">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Jus de Bissap</h5>
+                                    <p class="card-text">Bissap Rouge Classique - La version traditionnelle à base de fleurs d'hibiscus séchées - 18€</p>
+                                    <p class="card-text">Bissap Baobab - Enrichi avec de la poudre de fruit de baobab- 20€</p>
+                                    <p class="card-text">Bissap Menthe - Rafraîchissant avec des feuilles de menthe - 25€</p>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Autres jus</h5>
+                                    <p class="card-text">Jus de Baobab - Préparé à partir de la pulpe du fruit du baobab, riche en vitamine C - 21€</p>
+                                    <p class="card-text">Jus de Tamarin - Boisson acidulée et rafraîchissante à base de fruits de tamarinier - 18€</p>
+                                    <p class="card-text">Jus de Ditakh - Préparé à partir du fruit du ditakh (Detarium senegalense), très nutritif - 19€</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offres Spéciales  -->
+    <section id="offres" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Offres Spéciales</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="special-offer">
+                        <h3>Menu Dégustation</h3>
+                        <p>Découvrez notre menu dégustation 7 plats avec accord mets-vins</p>
+                        <p class="font-weight-bold text-primary">95€ par personne</p>
+                        <p><small>Disponible du mardi au jeudi soir</small></p>
+                        <a href="#reservation" class="btn btn-primary">Réserver maintenant</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="special-offer">
+                        <h3>Déjeuner Affaires</h3>
+                        <p>Entrée + Plat ou Plat + Dessert + Café</p>
+                        <p class="font-weight-bold text-primary">32€</p>
+                        <p><small>Du lundi au vendredi, de 12h à 14h30</small></p>
+                        <a href="#reservation" class="btn btn-primary">Réserver maintenant</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Réservation  -->
+    <section id="reservation" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Réservation</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form class="bg-white p-4 rounded shadow-sm" action="https://formspree.io/f/xqapevvv" method="POST">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nom">Nom & Prénom</label>
+                                <input type="text" class="form-control" id="nom" name="Nom et Prénom" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="telephone">Téléphone</label>
+                                <input type="tel" class="form-control" id="telephone" name="Téléphone" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="personnes">Nombre de personnes</label>
+                                <input type="number" class="form-control" id="personnes" name="Nombre de personnes" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control" id="date" name="Date" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="heure">Heure</label>
+                                <input type="time" class="form-control" id="heure" name="Heure" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Demandes spéciales</label>
+                            <textarea class="form-control" id="message" name="Demandes spéciales" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Soumettre la réservation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerie  -->
+    <section id="galerie" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Galerie</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Intérieur du restaurant">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus text-white fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Plat gastronomique">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus text-white fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Cuisine">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus text-white fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://img.freepik.com/photos-premium/gros-plan-recette-plat-principal-sain-viande-legumes-assiette-ronde-blanche-servie-au-restaurant-pendant-diner_385506-3371.jpg" alt="Chef cuisinier">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus text-white fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Pizza">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus text-white fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Plat délicieux">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus text-white fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Témoignages  -->
+    <section id="temoignages" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Témoignages Clients</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            
+                                <img src="https://img.freepik.com/photos-gratuite/homme-smiley-manger-au-restaurant_23-2148395385.jpg?w=740&q=80" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h5 class="mb-0">EL MALIK</h5>
+                                <p class="text-muted mb-0">DEveloppeur web a UNCHK</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Une expérience culinaire exceptionnelle ! Le service était impeccable et chaque plat était une œuvre d'art. Je recommande vivement le menu dégustation."</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            
+                                <img src="https://img.freepik.com/photos-gratuite/personne-degustant-repas-au-restaurant_23-2149269190.jpg?w=740&q=80" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h5 class="mb-0">AHMAD'ART</h5>
+                                <p class="text-muted mb-0">infographiste</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Le meilleur restaurant où j'ai mangé cette année. L'ambiance est raffinée, les plats sont créatifs et délicieux. Un must pour les amateurs de gastronomie."</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            
+                                <img src="https://img.freepik.com/photos-gratuite/homme-souriant-coup-moyen-mangeant-au-bistro_23-2149366425.jpg?w=740&q=80" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h5 class="mb-0">KHALIL</h5>
+                                <p class="text-muted mb-0">secretaire general.</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Parfait pour une occasion spéciale. Le personnel attentionné et les sommeliers connaissent parfaitement leur métier. Nous reviendrons certainement."</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="assets/etudiante.jpeg" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h5 class="mb-0">FATOU</h5>
+                                <p class="text-muted mb-0">etudiante</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Accueil chaleureux, plats raffinés et ambiance cosy. Une adresse à ne pas manquer à Pikine !"</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="assets/etudiant.jpeg" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h5 class="mb-0">MOUSSA</h5>
+                                <p class="text-muted mb-0">Tapiserie</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Service rapide et attentionné. Les desserts sont à tomber ! Je reviendrai avec plaisir."</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="assets/téléchargement (3).jpeg" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h5 class="mb-0">AMINA</h5>
+                                <p class="text-muted mb-0">etudiante</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Une expérience inoubliable pour l'anniversaire de mon mari. Merci à toute l'équipe !"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact  -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Contact</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <form class="bg-white p-4 rounded shadow-sm" action="https://formspree.io/f/xqapevvv" method="POST">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="contactNom">Nom & Prénom</label>
+                                <input type="text" class="form-control" id="contactNom" name="Nom et Prénom" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="contactEmail">Email</label>
+                                <input type="email" class="form-control" id="contactEmail" name="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSujet">Sujet</label>
+                            <input type="text" class="form-control" id="contactSujet" name="Sujet" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea class="form-control" id="contactMessage" name="Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-info">
+                        <h4 class="mb-4">Informations de contact</h4>
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <div>
+                                <h5 class="mb-0">Adresse</h5>
+                                <p class="mb-0">PIKINE,CITE EAUX ET FORET, 12100  DALIFORT</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <div>
+                                <h5 class="mb-0">Téléphone</h5>
+                                <p class="mb-0">+221 77 362 4? --</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            <div>
+                                <h5 class="mb-0">Email</h5>
+                                <p class="mb-0">contact-festivalfood@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-clock contact-icon"></i>
+                            <div>
+                                <h5 class="mb-0">Horaires</h5>
+                                <p class="mb-0">Lun-Sam: 12h-14h30 & 19h-22h30<br>Dimanche: Fermé</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="navbar-brand">FESTIVAL-FOOD</h3>
+                    <p class="mt-3">Une expérience culinaire exceptionnelle au cœur de pikine depuis 2025.</p>
+                    <div class="social-icons mt-4">
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://whatsapp.com" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-links">
+                        <h5>Liens Rapides</h5>
+                        <ul>
+                            <li><a href="#accueil">Accueil</a></li>
+                            <li><a href="javascript:void(0)" data-toggle="modal" data-target="#menuModal">Notre Menu</a></li>
+                            <li><a href="#offres">Offres Spéciales</a></li>
+                            <li><a href="#reservation">Réservation</a></li>
+                            <li><a href="#galerie">Galerie</a></li>
+                            <li><a href="#temoignages">Témoignages</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-links">
+                        <h5>Heures d'Ouverture</h5>
+                        <ul>
+                            <li>Lundi: 12h-14h30 & 19h-22h30</li>
+                            <li>Mardi: 12h-14h30 & 19h-22h30</li>
+                            <li>Mercredi: 12h-14h30 & 19h-22h30</li>
+                            <li>Jeudi: 12h-14h30 & 19h-22h30</li>
+                            <li>Vendredi: 12h-14h30 & 19h-23h</li>
+                            <li>Samedi: 12h-14h30 & 19h-23h</li>
+                            <li>Dimanche: Fermé</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Nouvelle section développeurs -->
+            
+                </div>
+            </div>
+        </div>
+        <hr class="bg-light">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="mb-0">&copy; 2025 FESTIVAL-FOOD. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Navbar scroll effect
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('.navbar').addClass('scrolled');
+                } else {
+                    $('.navbar').removeClass('scrolled');
+                }
+                
+                // touch bouton
+                if ($(this).scrollTop() > 300) {
+                    $('.back-to-top').addClass('active');
+                } else {
+                    $('.back-to-top').removeClass('active');
+                }
+            });
+            
+            // touche
+            $('.back-to-top').on('click', function() {
+                $('html, body').animate({scrollTop: 0}, 500);
+            });
+            
+            // Initialisation
+            $('[data-toggle="popover"]').popover();
+        });
+
+        // Protection : Bloquer clic droit, F12, Ctrl+U, Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.key === "F12" || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J
+            if (e.ctrlKey && e.shiftKey && (
+                e.key.toLowerCase() === 'i' ||
+                e.key.toLowerCase() === 'c' ||
+                e.key.toLowerCase() === 'j'
+            )) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Masquer le menu Inspecter dans le clic droit (pour certains navigateurs)
+        document.addEventListener('mousedown', function(e) {
+            if (e.button === 2) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
